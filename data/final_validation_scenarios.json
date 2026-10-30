@@ -1,0 +1,660 @@
+{
+  "note": "Frozen final_validation set for comparing the direct quote-decision-v1 architecture with hybrid quote-extract-v2 plus Python rules. These sentences were not used to write either prompt. Expected decisions were written by hand from the fictional catalog and the published policies, not by printing correct_decision. The proposed field copies that expected decision so the file loads. It is not a model output and it is not shown to the model. Expressions the reader leaves unresolved, such as '2 by 4 by 8' without a foot unit, bare '4×8' with no plywood word and no foot unit, and '4×8 inches', are not in this file because assigning a length or a sheet size would be a guess. final-ambiguous-eight has two readings: two catalog rows share the specs, and the 8-foot primary is also out of stock when substitution is not allowed. Both readings require human review with no SKU, so the scored fields are not forced past that agreement.",
+  "scenarios": [
+    {
+      "id": "final-plywood-ready",
+      "split": "final_validation",
+      "description": "Fully specified plywood sheet count inside the 200-sheet stock",
+      "customer_request": "Could you price 42 sheets of 23/32-inch plywood sheathing, 4×8 feet, for a subfloor?",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["thickness_in", "width_ft", "length_ft"],
+        "provided_specs": {
+          "thickness_in": "23/32",
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": 42,
+        "primary_sku": "PLY-23-32-4X8"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "PLY-23-32-4X8",
+        "quantity": 42,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "PLY-23-32-4X8",
+        "quantity": 42,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-ten-foot-ready",
+      "split": "final_validation",
+      "description": "Fully specified 10-foot studs written with ascii 2x4x10, inside the 100-piece stock",
+      "customer_request": "Builder here: I need 14 pieces of #2 SPF 2x4x10 lumber delivered as specified.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 10
+        },
+        "quantity": 14,
+        "primary_sku": "LUM-SPF-2X4-10"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 14,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 14,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-ten-foot-words",
+      "split": "final_validation",
+      "description": "Same 10-foot product, spelled as two-by-four by 10 feet, and substitutes are forbidden",
+      "customer_request": "Please send 3 pieces of number 2 SPF two-by-four by 10 feet. No substitutes please.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 10
+        },
+        "quantity": 3,
+        "primary_sku": "LUM-SPF-2X4-10"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 3,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 3,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-missing-length-spaced",
+      "split": "final_validation",
+      "description": "Lumber cross-section with spaces around the multiply sign, and no length",
+      "customer_request": "How much for 22 pieces of #2 SPF 2 × 4 lumber?",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4
+        },
+        "quantity": 22,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 22,
+        "missing_fields": ["length_ft"],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 22,
+        "missing_fields": ["length_ft"],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-missing-length-walls",
+      "split": "final_validation",
+      "description": "Interior-wall studs named as 2 x 4, with the length left out",
+      "customer_request": "I'd like a quote on 16 pieces of #2 SPF 2 x 4 lumber for interior walls.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4
+        },
+        "quantity": 16,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 16,
+        "missing_fields": ["length_ft"],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 16,
+        "missing_fields": ["length_ft"],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-missing-length-words",
+      "split": "final_validation",
+      "description": "Number 2 two-by-four with a piece count and no length",
+      "customer_request": "Can I get pricing on 7 pieces of number 2 SPF two-by-four?",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4
+        },
+        "quantity": 7,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 7,
+        "missing_fields": ["length_ft"],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 7,
+        "missing_fields": ["length_ft"],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-missing-thickness",
+      "split": "final_validation",
+      "description": "Plywood face size is 4×8 feet and the thickness is not named",
+      "customer_request": "We need 28 sheets of plywood, 4×8 feet, for the roof.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["thickness_in", "width_ft", "length_ft"],
+        "provided_specs": {
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": 28,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 28,
+        "missing_fields": ["thickness_in"],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 28,
+        "missing_fields": ["thickness_in"],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-missing-thickness-foot",
+      "split": "final_validation",
+      "description": "Plywood face size written as 4 by 8 foot, still with no thickness",
+      "customer_request": "Quote 11 sheets of plywood, 4 by 8 foot, sheathing only.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["thickness_in", "width_ft", "length_ft"],
+        "provided_specs": {
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": 11,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 11,
+        "missing_fields": ["thickness_in"],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 11,
+        "missing_fields": ["thickness_in"],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-missing-quantity-ply",
+      "split": "final_validation",
+      "description": "Plywood thickness and sheet size are complete, and the sheet count is absent",
+      "customer_request": "What is the price of 23/32-inch plywood sheathing, 4×8 feet?",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["thickness_in", "width_ft", "length_ft"],
+        "provided_specs": {
+          "thickness_in": "23/32",
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": null,
+        "primary_sku": "PLY-23-32-4X8"
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": null,
+        "missing_fields": ["quantity"],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": null,
+        "missing_fields": ["quantity"],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-missing-quantity-lumber",
+      "split": "final_validation",
+      "description": "10-foot lumber specs are complete, the piece count is absent, and substitutes are forbidden",
+      "customer_request": "Please price #2 SPF 2×4×10 lumber. Original stock only, no substitutions.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 10
+        },
+        "quantity": null,
+        "primary_sku": "LUM-SPF-2X4-10"
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": null,
+        "missing_fields": ["quantity"],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": null,
+        "missing_fields": ["quantity"],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-approved-sub",
+      "split": "final_validation",
+      "description": "8-foot studs with an approved equivalent allowed, quantity inside the alternative's 100-piece stock",
+      "customer_request": "If the #2 SPF 2×4×8 is out, an approved equivalent is fine. I need 12 pieces.",
+      "business_rules": {
+        "substitution_allowed": true,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 12,
+        "primary_sku": "LUM-SPF-2X4-8"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-ALT-2X4-8",
+        "quantity": 12,
+        "missing_fields": [],
+        "substitution_used": true
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-ALT-2X4-8",
+        "quantity": 12,
+        "missing_fields": [],
+        "substitution_used": true,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-approved-sub-ship",
+      "split": "final_validation",
+      "description": "Another approved 8-foot substitute, smaller quantity, still within alternative stock",
+      "customer_request": "Ship 9 pieces of #2 SPF 2×4×8-foot lumber and use an approved substitute if the original brand is unavailable.",
+      "business_rules": {
+        "substitution_allowed": true,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 9,
+        "primary_sku": "LUM-SPF-2X4-8"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-ALT-2X4-8",
+        "quantity": 9,
+        "missing_fields": [],
+        "substitution_used": true
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-ALT-2X4-8",
+        "quantity": 9,
+        "missing_fields": [],
+        "substitution_used": true,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-forbidden-in-stock",
+      "split": "final_validation",
+      "description": "Forbidden substitution on 10-foot studs that are themselves in stock, so the original is quoted",
+      "customer_request": "We want exactly 21 pieces of #2 SPF 2×4 by 10 feet. Substitutions are not acceptable.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 10
+        },
+        "quantity": 21,
+        "primary_sku": "LUM-SPF-2X4-10"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 21,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 21,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-forbidden-out",
+      "split": "final_validation",
+      "description": "Forbidden substitution on 8-foot studs whose primary stock is zero, so a person must review",
+      "customer_request": "Quote 5 pieces of #2 SPF 2×4×8 lumber and do not substitute anything.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 5,
+        "primary_sku": "LUM-SPF-2X4-8"
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 5,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 5,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-insufficient-alt",
+      "split": "final_validation",
+      "description": "Approved substitute allowed, but 140 pieces is more than the alternative's 100 and the primary has none",
+      "customer_request": "I can take an approved equivalent if needed. Please quote 140 pieces of #2 SPF 2×4×8-foot lumber.",
+      "business_rules": {
+        "substitution_allowed": true,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 140,
+        "primary_sku": "LUM-SPF-2X4-8"
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 140,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 140,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-unknown-siding",
+      "split": "final_validation",
+      "description": "Cedar siding model that is not a catalog SKU or spec",
+      "customer_request": "Quote 6 units of cedar bevel siding, model CB-90.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["model"],
+        "provided_specs": {
+          "model": "CB-90"
+        },
+        "quantity": 6,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 6,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 6,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-unknown-screws",
+      "split": "final_validation",
+      "description": "Drywall-screw model that is not in the catalog",
+      "customer_request": "Need 50 units of drywall screws, model DW-6.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["model"],
+        "provided_specs": {
+          "model": "DW-6"
+        },
+        "quantity": 50,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 50,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 50,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-ambiguous-eight",
+      "split": "final_validation",
+      "description": "Two catalog rows share #2 SPF 2×4×8, and the customer did not allow a substitute. Review with no SKU either way.",
+      "customer_request": "Quote 19 pieces of #2 SPF 2×4×8 lumber.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 19,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 19,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 19,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-plywood-one",
+      "split": "final_validation",
+      "description": "One plywood sheet, thickness written with a space before inch and the face size with spaced x",
+      "customer_request": "Hello, please quote 1 sheet of 23/32 inch plywood, 4 x 8 feet.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["thickness_in", "width_ft", "length_ft"],
+        "provided_specs": {
+          "thickness_in": "23/32",
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": 1,
+        "primary_sku": "PLY-23-32-4X8"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "PLY-23-32-4X8",
+        "quantity": 1,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "PLY-23-32-4X8",
+        "quantity": 1,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "final-plywood-over-stock",
+      "split": "final_validation",
+      "description": "Fully specified plywood whose 250 sheets exceed the 200 in stock, so a person must review",
+      "customer_request": "Quote 250 sheets of 23/32-inch plywood sheathing, 4×8 feet.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["thickness_in", "width_ft", "length_ft"],
+        "provided_specs": {
+          "thickness_in": "23/32",
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": 250,
+        "primary_sku": "PLY-23-32-4X8"
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 250,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 250,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "note": "Fictional product catalog for the Quote Evaluation Lab. These SKUs, descriptions, and stock levels are synthetic. They are not a Ventura catalog and they are not live inventory.",
+  "products": [
+    {
+      "sku": "PLY-23-32-4X8",
+      "name": "Plywood sheathing",
+      "summary": "Plywood sheathing, 23/32-inch thickness, 4×8 feet",
+      "stock": 200,
+      "specs": {
+        "thickness_in": "23/32",
+        "width_ft": 4,
+        "length_ft": 8
+      },
+      "substitutes_for": []
+    },
+    {
+      "sku": "LUM-SPF-2X4-8",
+      "name": "#2 SPF lumber",
+      "summary": "#2 SPF lumber, 2×4 inches, 8 feet long",
+      "stock": 0,
+      "specs": {
+        "grade": "#2",
+        "species": "SPF",
+        "thickness_in": 2,
+        "width_in": 4,
+        "length_ft": 8
+      },
+      "substitutes_for": []
+    },
+    {
+      "sku": "LUM-SPF-2X4-10",
+      "name": "#2 SPF lumber",
+      "summary": "#2 SPF lumber, 2×4 inches, 10 feet long",
+      "stock": 100,
+      "specs": {
+        "grade": "#2",
+        "species": "SPF",
+        "thickness_in": 2,
+        "width_in": 4,
+        "length_ft": 10
+      },
+      "substitutes_for": []
+    },
+    {
+      "sku": "LUM-ALT-2X4-8",
+      "name": "Approved alternative brand",
+      "summary": "Approved alternative brand, 2×4 inches, 8 feet long",
+      "stock": 100,
+      "specs": {
+        "grade": "#2",
+        "species": "SPF",
+        "thickness_in": 2,
+        "width_in": 4,
+        "length_ft": 8
+      },
+      "substitutes_for": ["LUM-SPF-2X4-8"]
+    }
+  ]
+}

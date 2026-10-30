@@ -1,0 +1,2476 @@
+{
+  "meta": {
+    "title": "Quote Evaluation Lab",
+    "synthetic": true,
+    "exploratory": true,
+    "modelName": "gpt-4o-mini",
+    "temperature": 0,
+    "directPrompt": "quote-decision-v1",
+    "hybridPrompt": "quote-extract-v2",
+    "scenarioCount": 20,
+    "sources": [
+      "data/catalog.json",
+      "data/final_validation_scenarios.json",
+      "runs/final-direct-v1.json",
+      "runs/final-hybrid-v2.json"
+    ]
+  },
+  "catalog": [
+    {
+      "sku": "PLY-23-32-4X8",
+      "name": "Plywood sheathing",
+      "summary": "Plywood sheathing, 23/32-inch thickness, 4×8 feet",
+      "stock": 200,
+      "specs": {
+        "thickness_in": "23/32",
+        "width_ft": 4,
+        "length_ft": 8
+      },
+      "substitutesFor": []
+    },
+    {
+      "sku": "LUM-SPF-2X4-8",
+      "name": "#2 SPF lumber",
+      "summary": "#2 SPF lumber, 2×4 inches, 8 feet long",
+      "stock": 0,
+      "specs": {
+        "grade": "#2",
+        "species": "SPF",
+        "thickness_in": 2,
+        "width_in": 4,
+        "length_ft": 8
+      },
+      "substitutesFor": []
+    },
+    {
+      "sku": "LUM-SPF-2X4-10",
+      "name": "#2 SPF lumber",
+      "summary": "#2 SPF lumber, 2×4 inches, 10 feet long",
+      "stock": 100,
+      "specs": {
+        "grade": "#2",
+        "species": "SPF",
+        "thickness_in": 2,
+        "width_in": 4,
+        "length_ft": 10
+      },
+      "substitutesFor": []
+    },
+    {
+      "sku": "LUM-ALT-2X4-8",
+      "name": "Approved alternative brand",
+      "summary": "Approved alternative brand, 2×4 inches, 8 feet long",
+      "stock": 100,
+      "specs": {
+        "grade": "#2",
+        "species": "SPF",
+        "thickness_in": 2,
+        "width_in": 4,
+        "length_ft": 8
+      },
+      "substitutesFor": [
+        "LUM-SPF-2X4-8"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "final-plywood-ready",
+      "description": "Fully specified plywood sheet count inside the 200-sheet stock",
+      "customerRequest": "Could you price 42 sheets of 23/32-inch plywood sheathing, 4×8 feet, for a subfloor?",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "thickness_in",
+          "width_ft",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "thickness_in": "23/32",
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": 42,
+        "primarySku": "PLY-23-32-4X8"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "PLY-23-32-4X8",
+        "quantity": 42,
+        "missingFields": [],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. PLY-23-32-4X8 matches the requested specifications, quantity 42 is correct, and 200 are available. No substitution was used."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "PLY-23-32-4X8",
+          "quantity": 42,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product matches the catalog entry for plywood sheathing with the specified dimensions and thickness, and there is sufficient stock available."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. PLY-23-32-4X8 matches the requested specifications, quantity 42 is correct, and 200 are available. No substitution was used."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "PLY-23-32-4X8",
+          "quantity": 42,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product is in stock for the stated quantity."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "plywood",
+          "grade": null,
+          "species": null,
+          "thickness_in": "23/32",
+          "width_in": null,
+          "width_ft": 4,
+          "length_ft": 8,
+          "quantity": 42,
+          "model": null,
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "plywood",
+            "grade": null,
+            "species": null,
+            "thickness_in": "23/32-inch",
+            "width_in": null,
+            "width_ft": "4×8 feet",
+            "length_ft": "4×8 feet",
+            "quantity": "42 sheets",
+            "model": null,
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [],
+        "recovered": [],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "length_ft",
+            "thickness_in",
+            "width_ft"
+          ],
+          "provided_specs": {
+            "thickness_in": "23/32",
+            "width_ft": 4,
+            "length_ft": 8
+          },
+          "quantity": 42,
+          "primary_sku": "PLY-23-32-4X8"
+        }
+      }
+    },
+    {
+      "id": "final-ten-foot-ready",
+      "description": "Fully specified 10-foot studs written with ascii 2x4x10, inside the 100-piece stock",
+      "customerRequest": "Builder here: I need 14 pieces of #2 SPF 2x4x10 lumber delivered as specified.",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 10
+        },
+        "quantity": 14,
+        "primarySku": "LUM-SPF-2X4-10"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 14,
+        "missingFields": [],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. LUM-SPF-2X4-10 matches the requested specifications, quantity 14 is correct, and 100 are available. No substitution was used."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-SPF-2X4-10",
+          "quantity": 14,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The customer requested 14 pieces of #2 SPF 2x4x10 lumber, which is available in stock. Therefore, I am quoting the exact product requested."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. LUM-SPF-2X4-10 matches the requested specifications, quantity 14 is correct, and 100 are available. No substitution was used."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-SPF-2X4-10",
+          "quantity": 14,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product is in stock for the stated quantity."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": 10,
+          "quantity": 14,
+          "model": null,
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": null,
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": "10",
+            "quantity": "14",
+            "model": null,
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)",
+          "length_ft=10 (read from the request)",
+          "quantity=14 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4,
+            "length_ft": 10
+          },
+          "quantity": 14,
+          "primary_sku": "LUM-SPF-2X4-10"
+        }
+      }
+    },
+    {
+      "id": "final-ten-foot-words",
+      "description": "Same 10-foot product, spelled as two-by-four by 10 feet, and substitutes are forbidden",
+      "customerRequest": "Please send 3 pieces of number 2 SPF two-by-four by 10 feet. No substitutes please.",
+      "substitutionStance": "forbidden",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 10
+        },
+        "quantity": 3,
+        "primarySku": "LUM-SPF-2X4-10"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 3,
+        "missingFields": [],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. LUM-SPF-2X4-10 matches the requested specifications, quantity 3 is correct, and 100 are available. No substitution was used."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-SPF-2X4-10",
+          "quantity": 3,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product is available in stock and matches the specifications provided by the customer."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. LUM-SPF-2X4-10 matches the requested specifications, quantity 3 is correct, and 100 are available. No substitution was used."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-SPF-2X4-10",
+          "quantity": 3,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product is in stock for the stated quantity."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": null,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": 10,
+          "quantity": 3,
+          "model": null,
+          "substitution_allowed": false,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": "number 2",
+            "species": "SPF",
+            "thickness_in": null,
+            "width_in": "4",
+            "width_ft": null,
+            "length_ft": "10",
+            "quantity": "3",
+            "model": null,
+            "substitution_allowed": "No substitutes please."
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)",
+          "length_ft=10 (read from the request)",
+          "quantity=3 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4,
+            "length_ft": 10
+          },
+          "quantity": 3,
+          "primary_sku": "LUM-SPF-2X4-10"
+        }
+      }
+    },
+    {
+      "id": "final-missing-length-spaced",
+      "description": "Lumber cross-section with spaces around the multiply sign, and no length",
+      "customerRequest": "How much for 22 pieces of #2 SPF 2 × 4 lumber?",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4
+        },
+        "quantity": 22,
+        "primarySku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 22,
+        "missingFields": [
+          "length_ft"
+        ],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "FAIL",
+        "failureOrigin": "decision",
+        "failureCategories": [
+          "unnecessary_human_escalation",
+          "missing_clarification"
+        ],
+        "reasons": [
+          "Decision status is NEEDS_REVIEW; expected NEEDS_CLARIFICATION. The request is missing length, so it cannot be quoted yet.",
+          "Missing information is recorded as nothing; expected length."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 22,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product, #2 SPF 2 × 4 lumber, is out of stock, and since substitution is not allowed, I cannot provide a quote for the request."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. It asks the customer to clarify length and does not guess a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_CLARIFICATION",
+          "sku": null,
+          "quantity": 22,
+          "missingFields": [
+            "length_ft"
+          ],
+          "substitutionUsed": false,
+          "rationale": "Required details are missing, so stock and substitutes were not considered."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": null,
+          "quantity": 22,
+          "model": null,
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": null,
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": null,
+            "quantity": "22 pieces",
+            "model": null,
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4
+          },
+          "quantity": 22,
+          "primary_sku": null
+        }
+      }
+    },
+    {
+      "id": "final-missing-length-walls",
+      "description": "Interior-wall studs named as 2 x 4, with the length left out",
+      "customerRequest": "I'd like a quote on 16 pieces of #2 SPF 2 x 4 lumber for interior walls.",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4
+        },
+        "quantity": 16,
+        "primarySku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 16,
+        "missingFields": [
+          "length_ft"
+        ],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "FAIL",
+        "failureOrigin": "decision",
+        "failureCategories": [
+          "unnecessary_human_escalation",
+          "missing_clarification"
+        ],
+        "reasons": [
+          "Decision status is NEEDS_REVIEW; expected NEEDS_CLARIFICATION. The request is missing length, so it cannot be quoted yet.",
+          "Missing information is recorded as nothing; expected length."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 16,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product, #2 SPF 2 x 4 lumber, is out of stock, and since substitution is not allowed, I cannot provide a quote for the requested quantity."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. It asks the customer to clarify length and does not guess a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_CLARIFICATION",
+          "sku": null,
+          "quantity": 16,
+          "missingFields": [
+            "length_ft"
+          ],
+          "substitutionUsed": false,
+          "rationale": "Required details are missing, so stock and substitutes were not considered."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": null,
+          "quantity": 16,
+          "model": null,
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": null,
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": null,
+            "quantity": "16 pieces",
+            "model": null,
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4
+          },
+          "quantity": 16,
+          "primary_sku": null
+        }
+      }
+    },
+    {
+      "id": "final-missing-length-words",
+      "description": "Number 2 two-by-four with a piece count and no length",
+      "customerRequest": "Can I get pricing on 7 pieces of number 2 SPF two-by-four?",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4
+        },
+        "quantity": 7,
+        "primarySku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 7,
+        "missingFields": [
+          "length_ft"
+        ],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "FAIL",
+        "failureOrigin": "decision",
+        "failureCategories": [
+          "unnecessary_human_escalation",
+          "missing_clarification"
+        ],
+        "reasons": [
+          "Decision status is NEEDS_REVIEW; expected NEEDS_CLARIFICATION. The request is missing length, so it cannot be quoted yet.",
+          "Missing information is recorded as nothing; expected length."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 7,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product, #2 SPF lumber 2x4 inches 8 feet long, is out of stock, and since substitution is not allowed, I cannot provide a quote for this request."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. It asks the customer to clarify length and does not guess a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_CLARIFICATION",
+          "sku": null,
+          "quantity": 7,
+          "missingFields": [
+            "length_ft"
+          ],
+          "substitutionUsed": false,
+          "rationale": "Required details are missing, so stock and substitutes were not considered."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": null,
+          "quantity": 7,
+          "model": null,
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "two-by-four",
+            "grade": "number 2",
+            "species": "SPF",
+            "thickness_in": null,
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": null,
+            "quantity": "7 pieces",
+            "model": null,
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4
+          },
+          "quantity": 7,
+          "primary_sku": null
+        }
+      }
+    },
+    {
+      "id": "final-missing-thickness",
+      "description": "Plywood face size is 4×8 feet and the thickness is not named",
+      "customerRequest": "We need 28 sheets of plywood, 4×8 feet, for the roof.",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "thickness_in",
+          "width_ft",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": 28,
+        "primarySku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 28,
+        "missingFields": [
+          "thickness_in"
+        ],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "FAIL",
+        "failureOrigin": "decision",
+        "failureCategories": [
+          "unsafe_quote_approval",
+          "wrong_product_or_quantity",
+          "missing_clarification"
+        ],
+        "reasons": [
+          "Decision status is READY_TO_QUOTE; expected NEEDS_CLARIFICATION. The request is missing thickness, so it cannot be quoted yet.",
+          "SKU PLY-23-32-4X8 was selected by assuming thickness 23/32 inches, which the customer did not specify.",
+          "Missing information is recorded as nothing; expected thickness."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "PLY-23-32-4X8",
+          "quantity": 28,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product is 28 sheets of 4×8 feet plywood, which matches the catalog SKU PLY-23-32-4X8 that is in stock."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. It asks the customer to clarify thickness and does not guess a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_CLARIFICATION",
+          "sku": null,
+          "quantity": 28,
+          "missingFields": [
+            "thickness_in"
+          ],
+          "substitutionUsed": false,
+          "rationale": "Required details are missing, so stock and substitutes were not considered."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "plywood",
+          "grade": null,
+          "species": null,
+          "thickness_in": null,
+          "width_in": null,
+          "width_ft": 4,
+          "length_ft": 8,
+          "quantity": 28,
+          "model": null,
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "plywood",
+            "grade": null,
+            "species": null,
+            "thickness_in": null,
+            "width_in": null,
+            "width_ft": "4",
+            "length_ft": "8",
+            "quantity": "28",
+            "model": null,
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "width_ft=4 (read from the request)",
+          "length_ft=8 (read from the request)",
+          "quantity=28 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "length_ft",
+            "thickness_in",
+            "width_ft"
+          ],
+          "provided_specs": {
+            "width_ft": 4,
+            "length_ft": 8
+          },
+          "quantity": 28,
+          "primary_sku": null
+        }
+      }
+    },
+    {
+      "id": "final-missing-thickness-foot",
+      "description": "Plywood face size written as 4 by 8 foot, still with no thickness",
+      "customerRequest": "Quote 11 sheets of plywood, 4 by 8 foot, sheathing only.",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "thickness_in",
+          "width_ft",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": 11,
+        "primarySku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 11,
+        "missingFields": [
+          "thickness_in"
+        ],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "FAIL",
+        "failureOrigin": "decision",
+        "failureCategories": [
+          "unsafe_quote_approval",
+          "wrong_product_or_quantity",
+          "missing_clarification"
+        ],
+        "reasons": [
+          "Decision status is READY_TO_QUOTE; expected NEEDS_CLARIFICATION. The request is missing thickness, so it cannot be quoted yet.",
+          "SKU PLY-23-32-4X8 was selected by assuming thickness 23/32 inches, which the customer did not specify.",
+          "Missing information is recorded as nothing; expected thickness."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "PLY-23-32-4X8",
+          "quantity": 11,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product is available in stock and matches the specifications provided by the customer."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. It asks the customer to clarify thickness and does not guess a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_CLARIFICATION",
+          "sku": null,
+          "quantity": 11,
+          "missingFields": [
+            "thickness_in"
+          ],
+          "substitutionUsed": false,
+          "rationale": "Required details are missing, so stock and substitutes were not considered."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "plywood",
+          "grade": null,
+          "species": null,
+          "thickness_in": null,
+          "width_in": null,
+          "width_ft": 4,
+          "length_ft": 8,
+          "quantity": 11,
+          "model": null,
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "plywood",
+            "grade": null,
+            "species": null,
+            "thickness_in": null,
+            "width_in": null,
+            "width_ft": "4",
+            "length_ft": "8",
+            "quantity": "11",
+            "model": null,
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "width_ft=4 (read from the request)",
+          "length_ft=8 (read from the request)",
+          "quantity=11 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "length_ft",
+            "thickness_in",
+            "width_ft"
+          ],
+          "provided_specs": {
+            "width_ft": 4,
+            "length_ft": 8
+          },
+          "quantity": 11,
+          "primary_sku": null
+        }
+      }
+    },
+    {
+      "id": "final-missing-quantity-ply",
+      "description": "Plywood thickness and sheet size are complete, and the sheet count is absent",
+      "customerRequest": "What is the price of 23/32-inch plywood sheathing, 4×8 feet?",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "thickness_in",
+          "width_ft",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "thickness_in": "23/32",
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": null,
+        "primarySku": "PLY-23-32-4X8"
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": null,
+        "missingFields": [
+          "quantity"
+        ],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "FAIL",
+        "failureOrigin": "decision",
+        "failureCategories": [
+          "unsafe_quote_approval",
+          "wrong_product_or_quantity",
+          "missing_clarification"
+        ],
+        "reasons": [
+          "Decision status is READY_TO_QUOTE; expected NEEDS_CLARIFICATION. The request is missing quantity, so it cannot be quoted yet.",
+          "SKU PLY-23-32-4X8 was selected by assuming quantity 1, which the customer did not specify.",
+          "Quantity is 1; expected no quantity.",
+          "Missing information is recorded as nothing; expected quantity."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "PLY-23-32-4X8",
+          "quantity": 1,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product, 23/32-inch plywood sheathing, 4×8 feet, is available in stock and matches the catalog specifications."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. It asks the customer to clarify quantity and does not guess a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_CLARIFICATION",
+          "sku": null,
+          "quantity": null,
+          "missingFields": [
+            "quantity"
+          ],
+          "substitutionUsed": false,
+          "rationale": "Required details are missing, so stock and substitutes were not considered."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "plywood",
+          "grade": null,
+          "species": null,
+          "thickness_in": "23/32",
+          "width_in": null,
+          "width_ft": 4,
+          "length_ft": 8,
+          "quantity": null,
+          "model": null,
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "plywood",
+            "grade": null,
+            "species": null,
+            "thickness_in": "23/32",
+            "width_in": null,
+            "width_ft": "4",
+            "length_ft": "8",
+            "quantity": null,
+            "model": null,
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=23/32 (read from the request)",
+          "width_ft=4 (read from the request)",
+          "length_ft=8 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "length_ft",
+            "thickness_in",
+            "width_ft"
+          ],
+          "provided_specs": {
+            "thickness_in": "23/32",
+            "width_ft": 4,
+            "length_ft": 8
+          },
+          "quantity": null,
+          "primary_sku": null
+        }
+      }
+    },
+    {
+      "id": "final-missing-quantity-lumber",
+      "description": "10-foot lumber specs are complete, the piece count is absent, and substitutes are forbidden",
+      "customerRequest": "Please price #2 SPF 2×4×10 lumber. Original stock only, no substitutions.",
+      "substitutionStance": "forbidden",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 10
+        },
+        "quantity": null,
+        "primarySku": "LUM-SPF-2X4-10"
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": null,
+        "missingFields": [
+          "quantity"
+        ],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "FAIL",
+        "failureOrigin": "decision",
+        "failureCategories": [
+          "unsafe_quote_approval",
+          "wrong_product_or_quantity",
+          "missing_clarification"
+        ],
+        "reasons": [
+          "Decision status is READY_TO_QUOTE; expected NEEDS_CLARIFICATION. The request is missing quantity, so it cannot be quoted yet.",
+          "SKU LUM-SPF-2X4-10 was selected by assuming quantity 1, which the customer did not specify.",
+          "Quantity is 1; expected no quantity.",
+          "Missing information is recorded as nothing; expected quantity."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-SPF-2X4-10",
+          "quantity": 1,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The customer requested #2 SPF 2×4×10 lumber, which is available in stock. Therefore, I quoted the SKU for that product."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. It asks the customer to clarify quantity and does not guess a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_CLARIFICATION",
+          "sku": null,
+          "quantity": null,
+          "missingFields": [
+            "quantity"
+          ],
+          "substitutionUsed": false,
+          "rationale": "Required details are missing, so stock and substitutes were not considered."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": 10,
+          "quantity": null,
+          "model": null,
+          "substitution_allowed": false,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": null,
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": "10",
+            "quantity": null,
+            "model": null,
+            "substitution_allowed": "no substitutions"
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)",
+          "length_ft=10 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4,
+            "length_ft": 10
+          },
+          "quantity": null,
+          "primary_sku": null
+        }
+      }
+    },
+    {
+      "id": "final-approved-sub",
+      "description": "8-foot studs with an approved equivalent allowed, quantity inside the alternative's 100-piece stock",
+      "customerRequest": "If the #2 SPF 2×4×8 is out, an approved equivalent is fine. I need 12 pieces.",
+      "substitutionStance": "allowed",
+      "substitutionPolicy": "An approved equivalent may be quoted when the product the customer asked for is unavailable. A product is an approved equivalent only when its substitutes_for list names the unavailable product. If several equivalents could apply, a person should choose.",
+      "rules": {
+        "substitutionAllowed": true,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 12,
+        "primarySku": "LUM-SPF-2X4-8"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-ALT-2X4-8",
+        "quantity": 12,
+        "missingFields": [],
+        "substitutionUsed": true,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. LUM-ALT-2X4-8 is an approved substitute for LUM-SPF-2X4-8, which has 0 available. The substitute matches the requested specifications, quantity 12 is within the 100 in stock, and substitution was permitted because the original is unavailable."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-ALT-2X4-8",
+          "quantity": 12,
+          "missingFields": [],
+          "substitutionUsed": true,
+          "rationale": "The requested #2 SPF 2×4×8 is out of stock, so I quoted the approved alternative brand which is an equivalent and has sufficient stock."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. LUM-ALT-2X4-8 is an approved substitute for LUM-SPF-2X4-8, which has 0 available. The substitute matches the requested specifications, quantity 12 is within the 100 in stock, and substitution was permitted because the original is unavailable."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-ALT-2X4-8",
+          "quantity": 12,
+          "missingFields": [],
+          "substitutionUsed": true,
+          "rationale": "The requested product is short, and one approved substitute can fill the quantity."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": 8,
+          "quantity": 12,
+          "model": null,
+          "substitution_allowed": true,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": null,
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": "8",
+            "quantity": "12",
+            "model": null,
+            "substitution_allowed": "an approved equivalent is fine"
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)",
+          "length_ft=8 (read from the request)",
+          "quantity=12 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": true,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4,
+            "length_ft": 8
+          },
+          "quantity": 12,
+          "primary_sku": "LUM-SPF-2X4-8"
+        }
+      }
+    },
+    {
+      "id": "final-approved-sub-ship",
+      "description": "Another approved 8-foot substitute, smaller quantity, still within alternative stock",
+      "customerRequest": "Ship 9 pieces of #2 SPF 2×4×8-foot lumber and use an approved substitute if the original brand is unavailable.",
+      "substitutionStance": "allowed",
+      "substitutionPolicy": "An approved equivalent may be quoted when the product the customer asked for is unavailable. A product is an approved equivalent only when its substitutes_for list names the unavailable product. If several equivalents could apply, a person should choose.",
+      "rules": {
+        "substitutionAllowed": true,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 9,
+        "primarySku": "LUM-SPF-2X4-8"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-ALT-2X4-8",
+        "quantity": 9,
+        "missingFields": [],
+        "substitutionUsed": true,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. LUM-ALT-2X4-8 is an approved substitute for LUM-SPF-2X4-8, which has 0 available. The substitute matches the requested specifications, quantity 9 is within the 100 in stock, and substitution was permitted because the original is unavailable."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-ALT-2X4-8",
+          "quantity": 9,
+          "missingFields": [],
+          "substitutionUsed": true,
+          "rationale": "The requested #2 SPF 2×4×8-foot lumber is out of stock, so I quoted the approved alternative brand which is an equivalent substitute and has sufficient stock."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. LUM-ALT-2X4-8 is an approved substitute for LUM-SPF-2X4-8, which has 0 available. The substitute matches the requested specifications, quantity 9 is within the 100 in stock, and substitution was permitted because the original is unavailable."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-ALT-2X4-8",
+          "quantity": 9,
+          "missingFields": [],
+          "substitutionUsed": true,
+          "rationale": "The requested product is short, and one approved substitute can fill the quantity."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": 8,
+          "quantity": 9,
+          "model": null,
+          "substitution_allowed": true,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": "2",
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": "8",
+            "quantity": "9",
+            "model": null,
+            "substitution_allowed": "use an approved substitute if the original brand is unavailable"
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)",
+          "length_ft=8 (read from the request)",
+          "quantity=9 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": true,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4,
+            "length_ft": 8
+          },
+          "quantity": 9,
+          "primary_sku": "LUM-SPF-2X4-8"
+        }
+      }
+    },
+    {
+      "id": "final-forbidden-in-stock",
+      "description": "Forbidden substitution on 10-foot studs that are themselves in stock, so the original is quoted",
+      "customerRequest": "We want exactly 21 pieces of #2 SPF 2×4 by 10 feet. Substitutions are not acceptable.",
+      "substitutionStance": "forbidden",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 10
+        },
+        "quantity": 21,
+        "primarySku": "LUM-SPF-2X4-10"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 21,
+        "missingFields": [],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. LUM-SPF-2X4-10 matches the requested specifications, quantity 21 is correct, and 100 are available. No substitution was used."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-SPF-2X4-10",
+          "quantity": 21,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product #2 SPF 2×4 by 10 feet is available in stock, and the quantity of 21 pieces can be quoted as requested."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. LUM-SPF-2X4-10 matches the requested specifications, quantity 21 is correct, and 100 are available. No substitution was used."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-SPF-2X4-10",
+          "quantity": 21,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product is in stock for the stated quantity."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": 10,
+          "quantity": 21,
+          "model": null,
+          "substitution_allowed": false,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": null,
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": "10 feet",
+            "quantity": "21 pieces",
+            "model": null,
+            "substitution_allowed": "Substitutions are not acceptable."
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4,
+            "length_ft": 10
+          },
+          "quantity": 21,
+          "primary_sku": "LUM-SPF-2X4-10"
+        }
+      }
+    },
+    {
+      "id": "final-forbidden-out",
+      "description": "Forbidden substitution on 8-foot studs whose primary stock is zero, so a person must review",
+      "customerRequest": "Quote 5 pieces of #2 SPF 2×4×8 lumber and do not substitute anything.",
+      "substitutionStance": "forbidden",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 5,
+        "primarySku": "LUM-SPF-2X4-8"
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 5,
+        "missingFields": [],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. LUM-SPF-2X4-8 has 0 available and substitution is not allowed, so the decision asks for human review instead of quoting a replacement."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 5,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested SKU for #2 SPF 2×4×8 lumber is out of stock, and since the customer does not allow substitutions, I cannot provide a quote."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. LUM-SPF-2X4-8 has 0 available and substitution is not allowed, so the decision asks for human review instead of quoting a replacement."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 5,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The catalog rules cannot make one legal quote, so this needs review."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": 8,
+          "quantity": 5,
+          "model": null,
+          "substitution_allowed": false,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": "2",
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": "8",
+            "quantity": "5",
+            "model": null,
+            "substitution_allowed": "do not substitute anything"
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)",
+          "length_ft=8 (read from the request)",
+          "quantity=5 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4,
+            "length_ft": 8
+          },
+          "quantity": 5,
+          "primary_sku": "LUM-SPF-2X4-8"
+        }
+      }
+    },
+    {
+      "id": "final-insufficient-alt",
+      "description": "Approved substitute allowed, but 140 pieces is more than the alternative's 100 and the primary has none",
+      "customerRequest": "I can take an approved equivalent if needed. Please quote 140 pieces of #2 SPF 2×4×8-foot lumber.",
+      "substitutionStance": "allowed",
+      "substitutionPolicy": "An approved equivalent may be quoted when the product the customer asked for is unavailable. A product is an approved equivalent only when its substitutes_for list names the unavailable product. If several equivalents could apply, a person should choose.",
+      "rules": {
+        "substitutionAllowed": true,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 140,
+        "primarySku": "LUM-SPF-2X4-8"
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 140,
+        "missingFields": [],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "FAIL",
+        "failureOrigin": "decision",
+        "failureCategories": [
+          "unsafe_quote_approval",
+          "incorrect_inventory_decision",
+          "wrong_product_or_quantity",
+          "incorrect_substitution"
+        ],
+        "reasons": [
+          "Decision status is READY_TO_QUOTE; expected NEEDS_REVIEW. The requested product is out of stock and no approved substitute is available.",
+          "SKU LUM-ALT-2X4-8 was selected, but no SKU should be chosen for this request.",
+          "LUM-ALT-2X4-8 has 100 available, which is less than the quoted quantity of 140."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "LUM-ALT-2X4-8",
+          "quantity": 140,
+          "missingFields": [],
+          "substitutionUsed": true,
+          "rationale": "The requested #2 SPF 2×4×8 lumber is out of stock, so I quoted the approved alternative brand which is an equivalent and has sufficient stock."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. LUM-SPF-2X4-8 cannot be fulfilled with a single approved in-stock substitute, so the decision asks for human review instead of guessing one."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 140,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The catalog rules cannot make one legal quote, so this needs review."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": 8,
+          "quantity": 140,
+          "model": null,
+          "substitution_allowed": true,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": "2",
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": "8",
+            "quantity": "140",
+            "model": null,
+            "substitution_allowed": "approved equivalent"
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)",
+          "length_ft=8 (read from the request)",
+          "quantity=140 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": true,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4,
+            "length_ft": 8
+          },
+          "quantity": 140,
+          "primary_sku": "LUM-SPF-2X4-8"
+        }
+      }
+    },
+    {
+      "id": "final-unknown-siding",
+      "description": "Cedar siding model that is not a catalog SKU or spec",
+      "customerRequest": "Quote 6 units of cedar bevel siding, model CB-90.",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "model"
+        ],
+        "providedSpecs": {
+          "model": "CB-90"
+        },
+        "quantity": 6,
+        "primarySku": null
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 6,
+        "missingFields": [],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. No catalog product matches the request, and the decision asks for human review without inventing a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 6,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "There are no products in the catalog that match the requested cedar bevel siding, model CB-90. Therefore, the request needs review."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. No catalog product matches the request, and the decision asks for human review without inventing a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 6,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "CB-90 is not in the catalog, so this needs review instead of a quote."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": null,
+          "species": "cedar",
+          "thickness_in": null,
+          "width_in": null,
+          "width_ft": null,
+          "length_ft": null,
+          "quantity": 6,
+          "model": "CB-90",
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": null,
+            "species": "cedar",
+            "thickness_in": null,
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": null,
+            "quantity": "6",
+            "model": "CB-90",
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [
+          "species=cedar (the cited words do not state that value)",
+          "product_type=lumber (evidence is not in the customer request)"
+        ],
+        "recovered": [
+          "quantity=6 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [],
+          "provided_specs": {},
+          "quantity": 6,
+          "primary_sku": null
+        }
+      }
+    },
+    {
+      "id": "final-unknown-screws",
+      "description": "Drywall-screw model that is not in the catalog",
+      "customerRequest": "Need 50 units of drywall screws, model DW-6.",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "model"
+        ],
+        "providedSpecs": {
+          "model": "DW-6"
+        },
+        "quantity": 50,
+        "primarySku": null
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 50,
+        "missingFields": [],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. No catalog product matches the request, and the decision asks for human review without inventing a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 50,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "There are no drywall screws listed in the catalog, so I cannot provide a quote. This requires further review."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. No catalog product matches the request, and the decision asks for human review without inventing a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 50,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "DW-6 is not in the catalog, so this needs review instead of a quote."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "null",
+          "grade": "null",
+          "species": "null",
+          "thickness_in": "null",
+          "width_in": null,
+          "width_ft": null,
+          "length_ft": null,
+          "quantity": 50,
+          "model": "DW-6",
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": null,
+            "grade": null,
+            "species": null,
+            "thickness_in": null,
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": null,
+            "quantity": "50",
+            "model": "DW-6",
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [
+          "grade=null (evidence is not in the customer request)",
+          "species=null (evidence is not in the customer request)",
+          "thickness_in=null (evidence is not in the customer request)",
+          "product_type=null (evidence is not in the customer request)"
+        ],
+        "recovered": [
+          "quantity=50 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [],
+          "provided_specs": {},
+          "quantity": 50,
+          "primary_sku": null
+        }
+      }
+    },
+    {
+      "id": "final-ambiguous-eight",
+      "description": "Two catalog rows share #2 SPF 2×4×8, and the customer did not allow a substitute. Review with no SKU either way.",
+      "customerRequest": "Quote 19 pieces of #2 SPF 2×4×8 lumber.",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "grade",
+          "species",
+          "thickness_in",
+          "width_in",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 19,
+        "primarySku": null
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 19,
+        "missingFields": [],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. No catalog product matches the request, and the decision asks for human review without inventing a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 19,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product, #2 SPF 2×4×8 lumber, is out of stock, and since substitution is not allowed, I cannot provide a quote for this request."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. No catalog product matches the request, and the decision asks for human review without inventing a SKU."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 19,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The catalog rules cannot make one legal quote, so this needs review."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "lumber",
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "width_ft": null,
+          "length_ft": 8,
+          "quantity": 19,
+          "model": null,
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "lumber",
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": "2",
+            "width_in": null,
+            "width_ft": null,
+            "length_ft": "8",
+            "quantity": "19",
+            "model": null,
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=2 (read from the request)",
+          "width_in=4 (read from the request)",
+          "length_ft=8 (read from the request)",
+          "quantity=19 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "grade",
+            "length_ft",
+            "species",
+            "thickness_in",
+            "width_in"
+          ],
+          "provided_specs": {
+            "grade": "#2",
+            "species": "SPF",
+            "thickness_in": 2,
+            "width_in": 4,
+            "length_ft": 8
+          },
+          "quantity": 19,
+          "primary_sku": "LUM-SPF-2X4-8"
+        }
+      }
+    },
+    {
+      "id": "final-plywood-one",
+      "description": "One plywood sheet, thickness written with a space before inch and the face size with spaced x",
+      "customerRequest": "Hello, please quote 1 sheet of 23/32 inch plywood, 4 x 8 feet.",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "thickness_in",
+          "width_ft",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "thickness_in": "23/32",
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": 1,
+        "primarySku": "PLY-23-32-4X8"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "PLY-23-32-4X8",
+        "quantity": 1,
+        "missingFields": [],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. PLY-23-32-4X8 matches the requested specifications, quantity 1 is correct, and 200 are available. No substitution was used."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "PLY-23-32-4X8",
+          "quantity": 1,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product matches the catalog entry for Plywood sheathing, which is in stock and meets the specified dimensions."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed quote matches the expected decision. PLY-23-32-4X8 matches the requested specifications, quantity 1 is correct, and 200 are available. No substitution was used."
+        ],
+        "decision": {
+          "status": "READY_TO_QUOTE",
+          "sku": "PLY-23-32-4X8",
+          "quantity": 1,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested product is in stock for the stated quantity."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "plywood",
+          "grade": null,
+          "species": null,
+          "thickness_in": "23/32",
+          "width_in": null,
+          "width_ft": 4,
+          "length_ft": 8,
+          "quantity": 1,
+          "model": null,
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "plywood",
+            "grade": null,
+            "species": null,
+            "thickness_in": "23/32 inch",
+            "width_in": null,
+            "width_ft": "4",
+            "length_ft": "8",
+            "quantity": "1 sheet",
+            "model": null,
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "width_ft=4 (read from the request)",
+          "length_ft=8 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "length_ft",
+            "thickness_in",
+            "width_ft"
+          ],
+          "provided_specs": {
+            "thickness_in": "23/32",
+            "width_ft": 4,
+            "length_ft": 8
+          },
+          "quantity": 1,
+          "primary_sku": "PLY-23-32-4X8"
+        }
+      }
+    },
+    {
+      "id": "final-plywood-over-stock",
+      "description": "Fully specified plywood whose 250 sheets exceed the 200 in stock, so a person must review",
+      "customerRequest": "Quote 250 sheets of 23/32-inch plywood sheathing, 4×8 feet.",
+      "substitutionStance": "silent",
+      "substitutionPolicy": "The customer does not allow a substitute. Quote a catalog product that fits the request, and do not swap in a different length, size, or brand.",
+      "rules": {
+        "substitutionAllowed": false,
+        "requiredFields": [
+          "thickness_in",
+          "width_ft",
+          "length_ft"
+        ],
+        "providedSpecs": {
+          "thickness_in": "23/32",
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": 250,
+        "primarySku": "PLY-23-32-4X8"
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 250,
+        "missingFields": [],
+        "substitutionUsed": false,
+        "rationale": ""
+      },
+      "direct": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. PLY-23-32-4X8 has 200 available and substitution is not allowed, so the decision asks for human review instead of quoting a replacement."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 250,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The requested quantity of 250 sheets exceeds the available stock of 200 sheets for the specified plywood sheathing, and since substitution is not allowed, I cannot provide a quote."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-decision-v1",
+        "temperature": 0
+      },
+      "hybrid": {
+        "outcome": "PASS",
+        "failureOrigin": "none",
+        "failureCategories": [],
+        "reasons": [
+          "The proposed decision matches the expected decision. PLY-23-32-4X8 has 200 available and substitution is not allowed, so the decision asks for human review instead of quoting a replacement."
+        ],
+        "decision": {
+          "status": "NEEDS_REVIEW",
+          "sku": null,
+          "quantity": 250,
+          "missingFields": [],
+          "substitutionUsed": false,
+          "rationale": "The catalog rules cannot make one legal quote, so this needs review."
+        },
+        "modelName": "gpt-4o-mini",
+        "promptVersion": "quote-extract-v2",
+        "temperature": 0,
+        "extraction": {
+          "product_type": "plywood",
+          "grade": null,
+          "species": null,
+          "thickness_in": "23/32",
+          "width_in": null,
+          "width_ft": 4,
+          "length_ft": 8,
+          "quantity": 250,
+          "model": null,
+          "substitution_allowed": null,
+          "evidence": {
+            "product_type": "plywood",
+            "grade": null,
+            "species": null,
+            "thickness_in": "23/32",
+            "width_in": null,
+            "width_ft": "4",
+            "length_ft": "8",
+            "quantity": "250",
+            "model": null,
+            "substitution_allowed": null
+          }
+        },
+        "rejected": [],
+        "recovered": [
+          "thickness_in=23/32 (read from the request)",
+          "width_ft=4 (read from the request)",
+          "length_ft=8 (read from the request)",
+          "quantity=250 (read from the request)"
+        ],
+        "derivedRules": {
+          "substitution_allowed": false,
+          "required_fields": [
+            "length_ft",
+            "thickness_in",
+            "width_ft"
+          ],
+          "provided_specs": {
+            "thickness_in": "23/32",
+            "width_ft": 4,
+            "length_ft": 8
+          },
+          "quantity": 250,
+          "primary_sku": "PLY-23-32-4X8"
+        }
+      }
+    }
+  ]
+}

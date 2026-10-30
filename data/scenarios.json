@@ -1,0 +1,163 @@
+{
+  "note": "Simulated customer requests and simulated proposed decisions. A pass or fail here is the accuracy of these fixtures against the catalog rules. It is not the measured performance of a live AI model.",
+  "scenarios": [
+    {
+      "id": "case-1-correct-catalog-match",
+      "description": "Correct catalog match",
+      "customer_request": "Please quote 120 sheets of 23/32-inch plywood, 4×8 feet.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["thickness_in", "width_ft", "length_ft"],
+        "provided_specs": {
+          "thickness_in": "23/32",
+          "width_ft": 4,
+          "length_ft": 8
+        },
+        "quantity": 120,
+        "primary_sku": "PLY-23-32-4X8"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "PLY-23-32-4X8",
+        "quantity": 120,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "PLY-23-32-4X8",
+        "quantity": 120,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Quote PLY-23-32-4X8, quantity 120. The wording of this note is ignored by the scorer."
+      }
+    },
+    {
+      "id": "case-2-missing-lumber-dimension",
+      "description": "Missing lumber dimension",
+      "customer_request": "Quote 60 pieces of #2 SPF 2×4 lumber.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4
+        },
+        "quantity": 60,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 60,
+        "missing_fields": ["length_ft"],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-8",
+        "quantity": 60,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "NEEDS_CLARIFICATION because length is missing. Do not select any SKU. This note copies the correct answer, but the structured decision still guesses 8-foot lumber."
+      }
+    },
+    {
+      "id": "case-3-substitution-not-allowed",
+      "description": "Substitution not allowed",
+      "customer_request": "Quote 10 pieces of #2 SPF 2×4×10-foot lumber. No substitutions.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 10
+        },
+        "quantity": 10,
+        "primary_sku": "LUM-SPF-2X4-10"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 10,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-ALT-2X4-8",
+        "quantity": 10,
+        "missing_fields": [],
+        "substitution_used": true,
+        "rationale": "Quoted an 8-foot substitute. The customer said no substitutions, and 8 feet is not the requested length."
+      }
+    },
+    {
+      "id": "case-4-approved-substitution",
+      "description": "Approved substitution",
+      "customer_request": "Quote 25 pieces of #2 SPF 2×4×8-foot lumber. An approved equivalent is acceptable if the original is unavailable.",
+      "business_rules": {
+        "substitution_allowed": true,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 25,
+        "primary_sku": "LUM-SPF-2X4-8"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-ALT-2X4-8",
+        "quantity": 25,
+        "missing_fields": [],
+        "substitution_used": true
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-ALT-2X4-8",
+        "quantity": 25,
+        "missing_fields": [],
+        "substitution_used": true,
+        "rationale": "Original 8-foot SPF is out of stock. LUM-ALT-2X4-8 is the approved equivalent."
+      }
+    },
+    {
+      "id": "case-5-product-not-found",
+      "description": "Product not found",
+      "customer_request": "Quote 5 units of acoustic insulation model AX99.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["model"],
+        "provided_specs": {
+          "model": "AX99"
+        },
+        "quantity": 5,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 5,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "AX99",
+        "quantity": 5,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "READY_TO_QUOTE, SKU AX99, quantity 5. AX99 is not a catalog SKU. This sentence is similar to a quote approval and is still a failure."
+      }
+    }
+  ]
+}

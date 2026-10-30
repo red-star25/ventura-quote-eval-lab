@@ -1,0 +1,236 @@
+{
+  "note": "Held-out fictional requests. quote-decision-v2 was not written from these sentences. Do not use them to revise a prompt. The proposed decision copies the checked expected decision so this file loads. It is not a model output, and it is not shown to the model.",
+  "scenarios": [
+    {
+      "id": "hold-missing-length",
+      "split": "heldout",
+      "description": "A short stud request with no board length",
+      "customer_request": "Can you quote 12 pieces of number 2 SPF two-by-four?",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4
+        },
+        "quantity": 12,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 12,
+        "missing_fields": ["length_ft"],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 12,
+        "missing_fields": ["length_ft"],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "hold-missing-quantity",
+      "split": "heldout",
+      "description": "Ten-foot lumber is identified and the count is not",
+      "customer_request": "Please price #2 SPF 2×4×10-foot lumber. Substitutions are not allowed.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 10
+        },
+        "quantity": null,
+        "primary_sku": "LUM-SPF-2X4-10"
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": null,
+        "missing_fields": ["quantity"],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": null,
+        "missing_fields": ["quantity"],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "hold-incomplete-lumber",
+      "split": "heldout",
+      "description": "Grade, species, and length are present without a cross section",
+      "customer_request": "Quote 9 pieces of #2 SPF lumber, 8 feet long.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "length_ft": 8
+        },
+        "quantity": 9,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 9,
+        "missing_fields": ["thickness_in", "width_in"],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_CLARIFICATION",
+        "sku": null,
+        "quantity": 9,
+        "missing_fields": ["thickness_in", "width_in"],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "hold-correct-ten-foot",
+      "split": "heldout",
+      "description": "A complete ten-foot lumber order",
+      "customer_request": "We need 8 pieces of #2 SPF 2×4 by 10 feet. Do not substitute.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 10
+        },
+        "quantity": 8,
+        "primary_sku": "LUM-SPF-2X4-10"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 8,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-SPF-2X4-10",
+        "quantity": 8,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "hold-approved-substitution",
+      "split": "heldout",
+      "description": "A small eight-foot order that allows an approved equivalent",
+      "customer_request": "We can take 4 pieces of #2 SPF 2×4×8 if you have them, or an approved equivalent when the original is out.",
+      "business_rules": {
+        "substitution_allowed": true,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 4,
+        "primary_sku": "LUM-SPF-2X4-8"
+      },
+      "expected": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-ALT-2X4-8",
+        "quantity": 4,
+        "missing_fields": [],
+        "substitution_used": true
+      },
+      "proposed": {
+        "status": "READY_TO_QUOTE",
+        "sku": "LUM-ALT-2X4-8",
+        "quantity": 4,
+        "missing_fields": [],
+        "substitution_used": true,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "hold-unknown-product",
+      "split": "heldout",
+      "description": "A roofing product that is outside the catalog",
+      "customer_request": "Quote 2 rolls of roofing felt, model RF-15.",
+      "business_rules": {
+        "substitution_allowed": false,
+        "required_fields": ["model"],
+        "provided_specs": {
+          "model": "RF-15"
+        },
+        "quantity": 2,
+        "primary_sku": null
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 2,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 2,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    },
+    {
+      "id": "hold-quantity-above-available-stock",
+      "split": "heldout",
+      "description": "The requested count is above the original line and the approved equivalent",
+      "customer_request": "Quote 200 pieces of #2 SPF 2×4×8-foot lumber. An approved equivalent is acceptable if the original is unavailable.",
+      "business_rules": {
+        "substitution_allowed": true,
+        "required_fields": ["grade", "species", "thickness_in", "width_in", "length_ft"],
+        "provided_specs": {
+          "grade": "#2",
+          "species": "SPF",
+          "thickness_in": 2,
+          "width_in": 4,
+          "length_ft": 8
+        },
+        "quantity": 200,
+        "primary_sku": "LUM-SPF-2X4-8"
+      },
+      "expected": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 200,
+        "missing_fields": [],
+        "substitution_used": false
+      },
+      "proposed": {
+        "status": "NEEDS_REVIEW",
+        "sku": null,
+        "quantity": 200,
+        "missing_fields": [],
+        "substitution_used": false,
+        "rationale": "Labeled expected decision copied so the file validates. The model is not shown this text."
+      }
+    }
+  ]
+}
